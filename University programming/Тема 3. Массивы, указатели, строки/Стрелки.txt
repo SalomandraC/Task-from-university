@@ -1,0 +1,26 @@
+// 9.11.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+ 
+using namespace std;
+ 
+int main() {
+    int cont = 0, len = 1;
+    char str[251];
+    scanf("%s", str);
+    char* ptr = str;
+    while (*(ptr + 4) != '\0') {
+        len++; ptr++;
+    }
+    ptr = str;
+    for (int i = 0; i < len; i++) {
+        if ((*ptr == '>' && *(ptr + 1) == '>' && *(ptr + 2) == '-' && *(ptr + 3) == '-' && *(ptr + 4) == '>')
+            || (*ptr == '<' && *(ptr + 1) == '-' && *(ptr + 2) == '-' && *(ptr + 3) == '<' && *(ptr + 4) == '<')) {
+            cont++;
+        }
+        ptr++;
+    }
+    printf("%d", cont);
+    return 0;
+}

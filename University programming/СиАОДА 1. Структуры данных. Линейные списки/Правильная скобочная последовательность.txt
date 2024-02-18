@@ -1,0 +1,60 @@
+https://informatics.msk.ru/mod/statements/view.php?id=206&chapterid=51#1
+//18.02.2024
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+using namespace std;
+#include <stdio.h>
+
+/* Структура, описывающая элемент линейного списка
+char data - значение
+Item* next - указатель на следующий элемент
+*/
+struct Item {
+    Item* next = nullptr;
+    char data = '\0';
+};
+
+typedef Item* list;
+
+int main() {
+    char steck;
+    int flag = 0;
+    list head = nullptr;
+
+    if (scanf("%c", &steck) == 0) printf("yes");
+    do {
+        if (steck == '(' || steck == '{' || steck == '[') {
+            list pup = new Item;
+            pup->data = steck;
+            pup->next = head;
+            head = pup;
+        }
+        else if (steck == ')' || steck == ']' || steck == '}') {
+            if (head == nullptr ||
+                (steck == ')' && head->data != '(') ||
+                (steck == '}' && head->data != '{') ||
+                (steck == ']' && head->data != '[')) {
+                ++flag;
+            }
+            if (head != nullptr) {
+                list pop = head;
+                head = head->next;
+                delete pop;
+            }
+        }
+    } while (!flag && steck != '\n' && scanf("%c", &steck) == 1);
+
+    if (head == nullptr && !flag) {
+        cout << "yes";
+    }
+    else {
+        cout << "no";
+    }
+    while (head != nullptr) {
+        list pop = head;
+        head = head->next;
+        delete pop;
+    }
+    return 0;
+}

@@ -1,0 +1,101 @@
+// 19.11.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <iostream>
+
+#define k 1000
+
+ 
+
+/* Вводит (с клавиатуры) n элементов в массив arr[k]
+
+* params:
+
+* int n - количество вводимых элементов
+
+* int arr[k] - массив, в который вводятся элементы
+
+* return: массив типа int, в который вводятся значения 
+
+*/
+
+int vvod_int(int n, int arr[k]);
+
+ 
+
+/* функция сравнения элементов массива
+
+* params:
+
+* const void* val1 - указатель на первый из сравниваемых элемент
+
+* const void* val2 - указатель на второй из сравниваемых элемент
+
+* return: флаг типа int, который
+
+* >0 если val1 больше val2
+
+* <0 если val1 меньше val2
+
+* =0 если val1 равен val2
+
+*/
+
+int compare(const void* val1,const void* val2);
+
+ 
+
+/* Анализирует m элементов, складывая их в общую сумму, если элемент положительный
+
+* int arr[k] - массив, из которого будут анализироваться элементы
+
+* int m - количество анализируемых элементов 
+
+* return: общую сумму положительных элементов из m обрабатываемых
+
+*/
+
+int vailu(int arr[k], int m);
+
+ 
+
+/*
+
+* элементы превого массива перезаписываются во второй в обратном порядке
+
+* Прараметры указатели на изначальный массив, конечный массив, количество элементов
+
+* Return:
+
+* void
+
+*/
+
+void reverse_foo(int* p_arr, int* p_arR, int n);
+
+ 
+
+ 
+
+int main() {
+
+    int sokr[k], sokr_true[k];
+
+    int n, m;
+
+    scanf("%d %d", &n, &m);
+
+    vvod_int(n, sokr);
+
+    qsort(sokr, n, sizeof(int), compare);
+
+    reverse_foo(sokr, sokr_true, n);
+
+    int itog = vailu(sokr_true, m);
+
+    printf("%d", itog);
+
+    return 0;
+
+}

@@ -1,0 +1,8 @@
+
+// 07.10.2023
+
+int Solution::solve(int A, int B, int C) {
+    int rez=(A+C-1)%B;
+    int rezit=(rez==0) ? B : rez;
+    return rezit;
+}

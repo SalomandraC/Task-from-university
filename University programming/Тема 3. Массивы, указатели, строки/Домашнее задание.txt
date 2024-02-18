@@ -1,0 +1,46 @@
+// 5.11.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#define NULL 0
+ 
+int main()
+{
+    int N[100], n, suma = 0, MinCh = 3000001, MaxCh = -3000001;
+    int mx_j, mi_j;
+    scanf("%d", &n);
+    for (int i =0; i < n; i++){
+        scanf("%d", &N[i]);
+        suma += (N[i] > 0) ? N[i] : 0;
+    }
+    int *p = N;
+    int *ptr_mx = &MaxCh;
+    int *ptr_mi = &MinCh;
+    for (int j = 0; j < n; j++){
+        if (*p > *ptr_mx){
+            ptr_mx = p;
+            mx_j = j;
+        }
+        if (*p < *ptr_mi){
+            ptr_mi = p;
+            mi_j = j;
+        }
+        p++;
+    }
+    int cont = 1;
+    if (mx_j > mi_j){
+        for (int m = (mi_j +1); m != mx_j; m++){
+            ptr_mi++;
+            cont *= *ptr_mi;
+        }
+    }
+    else
+        for (int m = (mx_j +1); m != mi_j; m++){
+            ptr_mx++;
+            cont *= *ptr_mx;
+        }
+ 
+    printf("%d %d", suma, cont);
+ 
+    return 0;
+}

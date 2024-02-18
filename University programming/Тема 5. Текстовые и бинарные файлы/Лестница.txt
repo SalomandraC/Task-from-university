@@ -1,0 +1,41 @@
+// 03.12.2023
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#define k 1000
+ 
+/*Функция определяет сумму членов арифметической прогрессии, 
+*пока она не становится больше или равной вводимому числу
+*Параметры
+*int n - число, до которого нужно вычислить сумму 
+*арифметической прогрессии
+*return:
+*int c - количество элементов прогрессии, сумма которых не превышает n
+*/
+int progression(int n);
+ 
+int main() {
+    int n, omlet;
+    int arr[k];
+    FILE* f = fopen("input.txt", "rb");
+    fscanf(f, "%d", &n);
+    if (n == 0)
+        omlet = 0;
+    else
+        omlet = progression(n);
+    fclose(f);
+    f = fopen("output.txt", "wb");
+    fprintf(f, "%d", omlet);
+    fclose(f);
+    return 0;
+}
+ 
+int progression(int n) {
+    int c = 1;
+    while ((c * (c + 1)) / 2 <= n) {
+        c++;
+    }
+    c -= 1;
+    return c;
+}

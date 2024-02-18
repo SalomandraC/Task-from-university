@@ -1,0 +1,27 @@
+// 20.10.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+ 
+int main()
+{
+    int N, flag(0);
+    long long int itog(0);
+    scanf("%d", &N);
+    for (int i = 0; i < N; i++){
+        int k;
+        scanf("%d ", &k);
+        if (k) {
+            itog = itog + 3 + flag;
+            flag++;
+        }
+        else
+            if (flag <= 3)
+                flag = 0;
+            else
+                flag = flag - 3;
+ 
+    }
+    printf("%lld", itog);
+    return 0;
+}

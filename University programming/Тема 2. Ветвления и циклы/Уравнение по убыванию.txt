@@ -1,0 +1,17 @@
+// 20.10.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+
+int main()
+{
+    int a, b, c, d;
+    scanf("%d %d %d %d", &a, &b, &c, &d);
+
+    for (int x = 1000; x >= 0; x--) {
+        if (a * x * x * x + b * x * x + c * x + d == 0)
+            printf("%d ", x);
+    }
+
+    return 0;
+}

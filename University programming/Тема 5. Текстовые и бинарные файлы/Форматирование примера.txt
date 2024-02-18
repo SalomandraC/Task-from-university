@@ -1,0 +1,348 @@
+// 1.12.2023
+
+
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+#include <string.h>
+
+
+
+#define k 100
+
+
+
+/* Функция для ввода строчки по указателю (ptr) в массив  (buffer)
+
+* Параметры:
+
+* char* ptr - указатель на строку
+
+* char* buffer - указатель на массив
+
+* return:
+
+* char массив, заполненный символами из строки, 
+
+*на которую указывает указатель
+
+*/
+
+
+void vivod(char* ptr, char* buffer);
+
+
+
+/* Функция нахождения максимального числа
+
+* Параметры:
+
+* int x1 - первое число
+
+* int x2 - второе число
+
+* return:
+
+* Максимальное из двух введенных чисел
+
+*/
+
+int max(int x1, int x2);
+
+
+
+int main() {
+
+    char op = '-';
+
+    int cont_kl = 0;
+
+    int const_st1 = 3, const_st2 = 5, const_st3 = 0;
+
+    int s = 0;
+
+    char grap[k] = { "" };
+
+    FILE* f1 = freopen("input.txt", "rb", stdin);
+
+    scanf("%d", &s);
+
+    for (int i = 0; i < s; i++) {
+
+        char buffer_2[k][k] = { "" };
+
+        int n = 0, m = 0;
+
+        scanf("%d", &n);
+
+        scanf("%d", &m);
+
+        gets(grap);
+
+        strcat(buffer_2[0], " ");
+
+        char str_num1[11] = { "" };
+
+        sprintf(str_num1, "%d", n);
+
+        strcat(buffer_2[0], str_num1);
+
+        strcat(buffer_2[0], " ");
+
+        char str_num2[11] = { "" };
+
+        sprintf(str_num1, "%d", m);
+
+        strcat(buffer_2[0], str_num1);
+
+        strcat(buffer_2[0], " ");
+
+        for (int i = 1; i <= 3; i++) {
+
+            char buffer_1[k] = { "" };
+
+            gets(buffer_1);
+
+            char* ptr = strtok(buffer_1, " ");
+
+            strcat(buffer_2[i], " ");
+
+            vivod(ptr, buffer_2[i]);
+
+            strcat(buffer_2[i], " ");
+
+            ptr = strtok(NULL, " ");
+
+            while (ptr != NULL) {
+
+                vivod(ptr, buffer_2[i]);
+
+                strcat(buffer_2[i], " ");
+
+                ptr = strtok(NULL, " ");
+
+            }
+
+        }
+
+        for (int j = 0; j < 3; j++) {
+
+            if (strlen(buffer_2[j]) - 1 > const_st2)
+
+                const_st2 = strlen(buffer_2[j]) - 1;
+
+        }
+
+        if ((strlen(buffer_2[3]) - 1) > const_st3)
+
+            const_st3 = (strlen(buffer_2[3]) - 1);
+
+    }
+
+    fclose(stdin);
+
+
+
+    int kol_ = const_st1 + const_st2 + const_st3 + 4;
+
+    FILE* f = freopen("input.txt", "rb", stdin);
+
+    f = freopen("output.txt", "wb", stdout);
+
+    scanf("%d", &s);
+
+    for (int i = 1; i <= s; i++) {
+
+        char buffer_2[k][k] = { "" };
+
+        int n = 0, m = 0;
+
+        scanf("%d", &n);
+
+        scanf("%d", &m);
+
+        gets(grap);
+
+        strcat(buffer_2[0], " ");
+
+        char str_num1[11] = { "" };
+
+        sprintf(str_num1, "%d", n);
+
+        strcat(buffer_2[0], str_num1);
+
+        strcat(buffer_2[0], " ");
+
+        char str_num2[11] = { "" };
+
+        sprintf(str_num1, "%d", m);
+
+        strcat(buffer_2[0], str_num1);
+
+        strcat(buffer_2[0], " ");
+
+        for (int i = 1; i <= 3; i++) {
+
+            char buffer_1[k] = { "" };
+
+            gets(buffer_1);
+
+            char* ptr = strtok(buffer_1, " ");
+
+            strcat(buffer_2[i], " ");
+
+            vivod(ptr, buffer_2[i]);
+
+            strcat(buffer_2[i], " ");
+
+            ptr = strtok(NULL, " ");
+
+            while (ptr != NULL) {
+
+                vivod(ptr, buffer_2[i]);
+
+                strcat(buffer_2[i], " ");
+
+                ptr = strtok(NULL, " ");
+
+            }
+
+        }
+
+        char* ptr = buffer_2[0];
+
+        for (int y = 0; y < kol_; y++)
+
+            printf("%c", op);
+
+        printf("\n");
+
+        printf("%c %d %c", '|', i, '|');
+
+        while (*ptr != '\r' && *ptr) {
+
+            printf("%c", *ptr); ptr++;
+
+        }
+
+        for (int h = 0; h < const_st2 - strlen(buffer_2[0]); h++)
+
+            printf("%c", ' ');
+
+        printf("%c", '|');
+
+        ptr = buffer_2[3];
+
+        while (*ptr != '\r' && *ptr) {
+
+            printf("%c", *ptr); ptr++;
+
+        }
+
+        if (*ptr == '\r')
+
+            printf("%c", ' ');
+
+        for (int h = 1; h < const_st3 - (strlen(buffer_2[3])-2); h++)
+
+            printf("%c", ' ');
+
+        printf("%c", '|');
+
+        printf("\n");
+
+        printf("|   |");
+
+        ptr = buffer_2[1];
+
+        while (*ptr != '\r' && *ptr) {
+
+            printf("%c", *ptr); ptr++;
+
+        }
+
+        for (int h = 0; h < const_st2 - strlen(buffer_2[1]) + 2; h++)
+
+            printf("%c", ' ');
+
+        printf("%c", '|');
+
+        for (int h = 0; h < const_st3; h++)
+
+            printf("%c", ' ');
+
+        printf("%c", '|');
+
+        printf("\n");
+
+        printf("|   |");
+
+        ptr = buffer_2[2];
+
+        while (*ptr != '\r' && *ptr) {
+
+            printf("%c", *ptr); ptr++;
+
+        }
+
+        for (int h = 0; h < const_st2 - strlen(buffer_2[2]) + 2; h++)
+
+            printf("%c", ' ');
+
+        printf("%c", '|');
+
+        for (int h = 0; h < const_st3; h++)
+
+            printf("%c", ' ');
+
+        printf("%c", '|');
+
+        printf("\n");
+
+    }
+
+    for (int y = 0; y < kol_; y++)
+
+        printf("%c", op);
+
+    fclose(stdin);
+
+    fclose(stdout);
+
+    return 0;
+
+}
+
+
+
+void vivod(char* ptr, char* buffer) {
+
+    while (*buffer != '\0')
+
+        buffer++;
+
+    do {
+
+        *buffer = *ptr;
+
+        ptr++;
+
+        buffer++;
+
+    } while (*ptr != '\0');
+
+    *buffer = '\0';
+
+    return buffer;
+
+}
+
+
+
+int max(int x1, int x2) {
+
+    return (x1 >= x2) ? x1 : x2;
+
+}

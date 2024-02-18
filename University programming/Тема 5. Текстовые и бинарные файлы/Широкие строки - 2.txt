@@ -1,0 +1,92 @@
+// 7.12.2023
+
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+#include <windows.h>
+
+#include <locale.h>
+
+#include <wchar.h>
+
+
+
+#define k 1024
+
+
+
+int main() {
+
+
+
+	setlocale(LC_ALL, "rus");
+
+	SetConsoleCP(1251);
+
+	SetConsoleOutputCP(1251);
+
+
+
+	char buffer[k];
+
+	char str_1 [k];
+
+	wchar_t str_2 [k];
+
+	wchar_t str_3 [k];
+
+	wcscpy(str_2, L"");
+
+	wscanf(L"%s", str_2);
+
+
+
+	FILE* f = fopen("input.txt", "rt");
+
+	fgets(str_1, k, f);
+
+	fclose(f);
+
+
+
+	const char* ptr = str_1;
+
+	mbstowcs(str_3, ptr, k);
+
+
+
+	wchar_t omlet[k];
+
+	if (wcslen(str_2) > wcslen(str_3)) {
+
+		wcscpy(omlet, str_2);
+
+		wcscat(omlet, str_3);
+
+	}
+
+	else {
+
+		wcscpy(omlet, str_3);
+
+		wcscat(omlet, str_2);
+
+	}
+
+
+
+	wprintf(L"%ls", omlet);
+
+
+
+	f = fopen("output.txt", "w, ccs=UTF-16LE");
+
+	fwprintf(f, L"%ls", omlet);
+
+	fclose(f);
+
+	return 0;
+
+}

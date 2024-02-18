@@ -1,0 +1,77 @@
+https://acmp.ru/index.asp?main=task&id_task=946
+//18.02.2024
+
+#include <iostream>
+using namespace std;
+#define Nmax 1000000
+ 
+/* Структура, описывающая элемент линейного списка
+int data - значение
+Item* next - указатель на следующий элемент
+Item* prev - указатель на предыдущий элемент
+*/
+typedef struct Item {
+    Item* next = nullptr;
+    Item* prev = nullptr;
+    int data;
+};
+ 
+typedef Item* list;
+ 
+int main(){
+    int n;
+    cin >> n;
+    list head = nullptr;
+    list tail = nullptr;
+    for (int i = 0; i < n; i++) {
+        int p = 0;
+        cin >> p;
+        if (p == 1) {
+            list f = new Item;
+            cin >> f->data;
+            if (head == nullptr) {
+                head = f;
+                tail = f;
+            } else {
+                f->next = head;
+                head->prev = f;
+                head = f;
+            }
+        }
+        else if (p == 2) {
+            list f = new Item;
+            cin >> f->data;
+            if (tail == nullptr) {
+                head = f;
+                tail = f;
+            } else {
+                f->prev = tail;
+                tail->next = f;
+                tail = f;
+            }
+        }
+        else if (p == 3) {
+            list f = head;
+            cout << head->data << " ";
+            head = head->next;
+            if (head != nullptr) {
+                head->prev = nullptr;
+            } else {
+                tail = nullptr;
+            }
+            delete f;
+        }
+        else if (p == 4) {
+            list f = tail;
+            cout << tail->data << " ";
+            tail = tail->prev;
+            if (tail != nullptr) {
+                tail->next = nullptr;
+            } else {
+                head = nullptr;
+            }
+            delete f;
+        }
+    }
+    return 0;
+}

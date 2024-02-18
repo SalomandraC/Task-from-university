@@ -1,0 +1,276 @@
+// 03.12.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+#include <stdlib.h>
+
+#include <string.h>
+
+#define k 200
+
+
+
+
+
+/* Функция для нахождения указателей с одинаковыми строками по ссылке и 
+
+* их записи одного из них в 3ий массива указателей. Считает количество
+
+* совпавших значений.
+
+* Параметры:
+
+* char** arr_ptr1 - указатель на строку первого двумерного массива
+
+* char** arr_ptr2 - указатель на строку второго двумерного массива
+
+* char** arr3 - указатель на совпадающие строки
+
+* int* p - указатель на массив, в котором хранится количество совпавших строк
+
+* int n - количество строк в первом двумерном массиве
+
+* int m - количество строк во втором двумерном массиве
+
+* return:
+
+* ничего
+
+*/
+
+void diff(char** arr_ptr1, char** arr_ptr2, char** arr3, int* p, int n, int m);
+
+
+
+/* Функция для нахождения указателей с разными строками по ссылке и
+
+* их записи одного из них в 3ий массива указателей. 
+
+* Параметры:
+
+* char** arr_ptr1 - указатель на строку первого двумерного массива
+
+* char** arr_ptr2 - указатель на строку второго двумерного массива
+
+* char** arr3 - указатель на разные строки
+
+* int n - количество строк в первом двумерном массиве
+
+* int m - количество строк во втором двумерном массиве
+
+* return:
+
+* ничего
+
+*/
+
+void no_diff(char** arr_ptr1, char** arr_ptr2, char** arr3, int n, int m);
+
+
+
+/* Функция возвращает результат сравнения двух строк
+
+* const void* p1 - указатели на элементы первого массива для сравнения
+
+* const void* p2 - указатели на элементы второго массива для сравнения
+
+* return:
+
+* 1 - 1ая больше 2ой
+
+* 0 - равны
+
+* -1 - 2ая больше 1ой
+
+*/
+
+int scmp(const void* p1, const void* p2);
+
+
+
+int main(void) {
+
+    char arr1[k][k]{ "" };
+
+    char arr2[k][k]{ "" };
+
+    int n, m;
+
+    char* ukaz1[k];
+
+    char* ukaz2[k];
+
+    char* ukaz3[k];
+
+    char* ukaz4[k];
+
+    char boof2[k] = "", boof1[k] = "";
+
+    char* ptr = boof1;
+
+    FILE* f = fopen("input.txt", "rt");
+
+    fscanf(f, "%d", &n);
+
+    for (int i = 0; i < n; i++) {
+
+        int j = 0;
+
+        fscanf(f, "%s", boof1);
+
+        while (*ptr) {
+
+            j++; ptr++;
+
+        }
+
+        strncpy(arr1[i], boof1, j);
+
+        ptr = boof1;
+
+        ukaz1[i] = arr1[i];
+
+    }
+
+    qsort(ukaz1, n, sizeof(char*), scmp);
+
+    ptr = boof2;
+
+    fscanf(f, "%d", &m);
+
+    for (int i = 0; i < m; i++) {
+
+        int j = 0;
+
+        fscanf(f, "%s", boof2);
+
+        while (*ptr) {
+
+            j++; ptr++;
+
+        }
+
+        strncpy(arr2[i], boof2, j);
+
+        ptr = boof2;
+
+        ukaz2[i] = arr2[i];
+
+    }
+
+    qsort(ukaz2, m, sizeof(char*), scmp);
+
+    int p[1] = { 0 };
+
+    diff(ukaz1, ukaz2, ukaz3, p, n, m);
+
+    no_diff(ukaz1, ukaz2, ukaz4, n, m);
+
+    fclose(f);
+
+    f = fopen("output.txt", "wb");
+
+    fprintf(f, "%s: ", "Friends");
+
+    for (int i = 0; i < n - 1; i++)
+
+        fprintf(f, "%s, ", ukaz1[i]);
+
+    (n - 1 < 0) ? fprintf(f, "\n") : fprintf(f, "%s\n", ukaz1[n - 1]);
+
+    fprintf(f, "%s: ", "Mutual Friends");
+
+    for (int i = 0; i < *p - 1; i++)
+
+        fprintf(f, "%s, ", ukaz3[i]);
+
+    (*p - 1 < 0) ? fprintf(f, "\n") : fprintf(f, "%s\n", ukaz3[*p - 1]);
+
+    fprintf(f, "%s: ", "Also Friend of");
+
+    for (int i = 0; i < m - *p - 1; i++)
+
+        fprintf(f, "%s, ", ukaz4[i]);
+
+    (m - *p - 1 < 0) ? fprintf(f, "\n") : fprintf(f, "%s\n", ukaz4[m - *p - 1]);
+
+    fclose(f);
+
+    return 0;
+
+}
+
+
+
+void diff(char** arr_ptr1, char** arr_ptr2, char** arr3, int* p, int n, int m) {
+
+    int cont = 0;
+
+    for (int i = 0; i < n; i++) {
+
+        for (int j = 0; j < m; j++) {
+
+            if (strcmp(arr_ptr1[i], arr_ptr2[j]) == 0) {
+
+                arr3[cont] = arr_ptr1[i];
+
+                cont++;
+
+            }
+
+        }
+
+    }
+
+    *p = cont;
+
+}
+
+
+
+void no_diff(char** arr_ptr1, char** arr_ptr2, char** arr3, int n, int m) {
+
+    int cont = 0;
+
+    for (int i = 0; i < m; i++) {
+
+        int flag = 0;
+
+        for (int j = 0; j < n; j++) {
+
+            if (strcmp(arr_ptr2[i], arr_ptr1[j]) == 0) {
+
+                flag = 1;
+
+            }
+
+        }
+
+        if (!flag) {
+
+            arr3[cont++] = arr_ptr2[i];
+
+        }
+
+    }
+
+}
+
+
+
+
+
+int scmp(const void* p1, const void* p2) {
+
+    const char* s1, * s2;
+
+    s1 = *(char**)p1;
+
+    s2 = *(char**)p2;
+
+    return strcmp(s1, s2);
+
+
+}

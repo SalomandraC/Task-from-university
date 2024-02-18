@@ -1,0 +1,23 @@
+// 20.10.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+ 
+int main()
+{
+    float M, N;
+    double flag;
+    scanf("%f %f", &N, &M);
+     
+    int cara = (int) N % (int) M;
+    int dot = (N / 1) / (M / 1);
+    flag = (N / M) - dot;
+ 
+    for (int i = 0; i < M; i++) {
+        if (flag && i >= M - cara)
+            printf("%d ", dot + 1);
+        else
+            printf("%d ", dot);
+    }
+    return 0;
+}

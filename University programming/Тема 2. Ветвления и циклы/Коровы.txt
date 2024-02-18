@@ -1,0 +1,31 @@
+// 20.10.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+
+int main()
+{
+    int k, n;
+	scanf("%d", &k);
+	n = k;
+	(k == 11) ? printf("%d korov\n", 11) :
+	(k == 12) ? printf("%d korov\n", 12) :
+	(k == 13) ? printf("%d korov\n", 13) :
+	(k == 14) ? printf("%d korov\n", 14) :
+	k %= 10;
+	switch (k)
+	{
+	case 1: printf("%d korova\n", n); break;
+	case 2:
+	case 3:
+	case 4: printf("%d korovy\n", n); break;
+	case 5:
+	case 6:
+	case 7:
+	case 8:
+	case 9:
+	case 0: printf("%d korov\n", n); break;
+	}
+    return 0;
+}
+

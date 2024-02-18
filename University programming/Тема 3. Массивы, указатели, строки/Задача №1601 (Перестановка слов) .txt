@@ -1,0 +1,37 @@
+// 9.11.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+
+int main() {
+    char s[2][255];
+    char l[256];
+    char* p;
+    char* p1;
+    cin.getline(l, 256);
+    p = l;
+
+    for (int i = 0; i < 2; i++) {
+        int j = 0;
+        while (*p != ' ' && *p) {
+            s[i][j] = *p;
+            p++; j++;
+        }
+        s[i][j] = 'F';
+        p++;
+    }
+    for (int i = 1; i >= 0; i--) {
+        int j = 0; p1 = s[i];
+        while (*p1 != 'F') {
+            printf("%c", s[i][j]);
+            p1++; j++;
+        }
+        printf(" ");
+        j = 0;
+    }
+    return 0;
+}

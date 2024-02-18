@@ -1,0 +1,47 @@
+// 1.12.2023
+
+
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+#include <string.h>
+
+
+
+#define k 100
+
+
+
+int main() {
+
+    int n, cont = 0;
+
+    FILE* f = fopen("input.txt", "rb");
+
+    int flag = 0;
+
+    do {
+
+        char boofer[k] = "";
+
+        fgets(boofer, sizeof(boofer), f);
+
+        if (strcmp(boofer, "\r\n") == 0)
+
+            cont++;
+
+        if (strcmp(boofer, "") == 0)
+
+            flag++;
+
+    } while ( flag == 0);
+
+    fclose(f);
+
+    printf("%d", cont);
+
+    return 0;
+
+}

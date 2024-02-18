@@ -1,0 +1,38 @@
+// 22.11.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#define k 100001+1
+ 
+int main() {
+    int n = 0, flag = 0;
+    char str[k];
+    char str_itog[k] = "";
+    scanf("%s", &str);
+    int l = strlen(str);
+    scanf("%d", &n);
+    if (n > 0) {
+        for (int i = 0; i < n && i < (1023 / l); i++) {
+            strcat(str_itog, str);
+        }
+    int g = (1023 - strlen(str_itog));
+    if (g <= l)
+        strncat(str_itog, str, g);
+    printf("%s", str_itog);
+    }
+    else {
+        n *= -1;
+        char test;
+        strncat(str_itog, str, strlen(str) / n);
+        for (int i = strlen(str) / n; i < strlen(str); i += strlen(str) / n) {
+            if (strncmp(str_itog, &str[i], strlen(str) / n))
+                flag++;
+        }
+        if (flag)
+            printf("NO SOLUTION");
+        else
+            printf("%s", str_itog);
+    }
+    return 0;
+}

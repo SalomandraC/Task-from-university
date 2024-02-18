@@ -1,0 +1,31 @@
+// 5.11.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+ 
+int main()
+{
+    int N[100], n, Chet = 0, Nech = 0;
+    scanf("%d", &n);
+    for (int i =0; i < n; i++)
+        scanf("%d", &N[i]);
+    int *p = N;
+    for(int j = 0; j < n; j++){
+      if (*p % 2){
+            printf("%d ", *p); Nech++;
+      }
+      p++;
+    }
+    p=N;
+    printf("\n");
+    for(int j = 0; j < n; j++){
+      if (!(*p % 2)){
+            printf("%d ", *p); Chet++;
+      }
+      p++;
+    }
+ 
+    (Chet >= Nech) ? printf("\nYES") : printf("\nNO");
+ 
+    return 0;
+}

@@ -1,0 +1,19 @@
+// 23.10.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+  
+int main()
+{
+    int A;
+    scanf("%d", &A);
+    int i(0), a(0);
+    a = A;
+    while (A != 0) {
+        A = A >> 1 << 1;
+        i += (a != A);
+        a = A = A >> 1;
+    }
+    printf("%d", i);
+    return 0;
+}

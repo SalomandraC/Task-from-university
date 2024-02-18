@@ -1,0 +1,109 @@
+// 17.12.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+#include <stdlib.h>
+
+
+
+// Структура, показывающая Имя Фамилие ученика, его оценки по предметам и среднее  из этих оценок
+
+// параметры
+
+// char Firstname[30] - фамилие
+
+// char Name[30] - имя
+
+// int math - оценка по математике
+
+// int fiz - оценка по физике
+
+// int inf - оценка по информатике
+
+// double suma - среднее от всех оценок
+
+struct table {
+
+    char Firstname[30], Name[30];
+
+    int math, fiz, inf;
+
+    double suma;
+
+};
+
+
+
+// Функция сравнения для сортировки структуры table
+
+// параметры:
+
+// const void* a - указатель на элемент suma структуры table записанныйв ячейке памяти Jurnal[i]
+
+// const void* b - указатель на элемент suma структуры table записанныйв ячейке памяти не Jurnal[i]
+
+// return
+
+// флаг, равный 0, если значения равны, -1, если а > b, 1 если а < b
+
+int cmp_table(const void* a, const void* b) {
+
+    int flag = 0;
+
+    struct table* ta = (struct table*)a;
+
+    struct table* tb = (struct table*)b;
+
+    if (ta->suma > tb->suma)
+
+        flag = 1;
+
+    else if (ta->suma < tb->suma)
+
+        flag =  -1;
+
+    return -flag;
+
+}
+
+
+
+int main() {
+
+    int Chislo;
+
+    scanf("%d", &Chislo);
+
+    struct table* Jurnal = calloc(Chislo, sizeof(struct table));
+
+    if (!Jurnal)
+
+        exit(1);
+
+    for (int i = 0; i < Chislo; i++) {
+
+        scanf("%s %s %d %d %d", Jurnal[i].Firstname, Jurnal[i].Name, &Jurnal[i].math, &Jurnal[i].fiz, &Jurnal[i].inf);
+
+        Jurnal[i].suma = (Jurnal[i].math + Jurnal[i].fiz + Jurnal[i].inf) / 3.;
+
+    }
+
+    qsort(Jurnal, Chislo, sizeof(struct table), cmp_table);
+
+    double max = Jurnal[0].suma;
+
+    for (int i = 0; i < Chislo; i++) {
+
+        if (Jurnal[i].suma == max)
+
+            printf("%s %s\n", Jurnal[i].Firstname, Jurnal[i].Name);
+
+    }
+
+    free(Jurnal);
+
+    return 0;
+
+}

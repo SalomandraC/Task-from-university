@@ -1,0 +1,22 @@
+// 20.10.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+ 
+int main()
+{
+    int n, itog(-1), melt(0);
+    scanf("%d", &n);
+     
+    for (int i = 1; i <= n; i++) {
+        int old(0), pol(0);
+        scanf("%d %d", &old, &pol);
+        if (melt < old && pol) {
+            melt = old;
+            itog = i;
+        }
+    }
+    printf("%d", itog);
+ 
+    return 0;
+}

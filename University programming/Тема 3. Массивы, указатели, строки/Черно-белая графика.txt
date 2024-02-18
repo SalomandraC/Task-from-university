@@ -1,0 +1,65 @@
+// 5.11.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#define p 200
+ 
+int main() {
+    int w, h;
+    char izn1[p][p];
+    scanf("%d %d", &w, &h);
+    for (int i = 1; i < w + 2; i++) {
+        for (int j = 1; j < h + 1; j++) {
+            if (i == w && j == h)
+                scanf("%c", &izn1[w][h]);
+            else
+                scanf("%c", &izn1[i][j]);
+        }
+    }
+    char izn2[p][p];
+    for (int i = 1; i < w + 2; i++) {
+        for (int j = 1; j < h + 1; j++) {
+            if (i == w && j == h)
+                scanf("%c", &izn2[w][h]);
+            else
+                scanf("%c", &izn2[i][j]);
+        }
+    }
+    int cont(1);
+    char f1(0), f2(0), f3(0), f4(0), v(0);
+    scanf("%c%c%c%c%c", &v, &f1, &f2, &f3, &f4);
+    for (int i = 1; i <= w + 1; i++) {
+        for (int j = 1; j <= h; j++) {
+            if (cont != w) {
+                if (izn1[i][j] == '0' && izn2[i][j] == '0') {
+                    printf("%c", f1); cont++;
+                }
+                if (izn1[i][j] == '0' && izn2[i][j] == '1') {
+                    printf("%c", f2); cont++;
+                }
+                if (izn1[i][j] == '1' && izn2[i][j] == '0') {
+                    printf("%c", f3); cont++;
+                }
+                if (izn1[i][j] == '1' && izn2[i][j] == '1') {
+                    printf("%c", f4); cont++;
+                }
+            }
+            else {
+                if (izn1[i][j] == '0' && izn2[i][j] == '0') {
+                    printf("%c", f1); cont=1;
+                }
+                if (izn1[i][j] == '0' && izn2[i][j] == '1') {
+                    printf("%c", f2); cont=1;
+                }
+                if (izn1[i][j] == '1' && izn2[i][j] == '0') {
+                    printf("%c", f3); cont=1;
+                }
+                if (izn1[i][j] == '1' && izn2[i][j] == '1') {
+                    printf("%c", f4); cont=1;
+                }
+                printf("\n");
+            }
+        }
+    }
+    return 0;
+}

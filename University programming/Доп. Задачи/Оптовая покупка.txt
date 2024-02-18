@@ -1,0 +1,26 @@
+// 08.01.2024
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+int koef[3] = { 105, 1025, 11400 };
+
+int main() {
+    int kor = 0, puch = 0, para = 0, sock = 0;
+    scanf("%d", &sock);
+
+    kor = sock / 144; sock %= 144;
+    puch = sock / 12; sock %= 12;
+    para = sock;
+  
+    int value1 = koef[0] * para + koef[1] * puch + koef[2] * kor;
+    int value2 = koef[1] * (puch + 1) + koef[2] * kor;
+    int value3 = koef[2] * (kor + 1);
+
+    if (value1 < value2 && value1 < value3) printf("%d %d %d", kor, puch, para);
+    else if (value2 < value1 && value2 < value3) printf("%d %d %d", kor, puch+1, 0);
+    else printf("%d %d %d", kor+1, 0, 0);
+
+    return 0;
+}

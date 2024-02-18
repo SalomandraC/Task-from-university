@@ -1,0 +1,22 @@
+// 20.10.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+
+int main()
+{
+    int N, plus(0), minus(0), null(0);
+    scanf("%d", &N);
+    for (int i = 0; i < N; i++){
+        int k;
+        scanf("%d ", &k);
+        if (k == 0)
+            null++;
+        else if (k < 0)
+            minus++;
+        else
+            plus++;        
+    }
+    printf("%d %d %d", null, plus, minus);
+    return 0;
+}

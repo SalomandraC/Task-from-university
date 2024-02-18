@@ -1,0 +1,281 @@
+// 19.11.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+#define k 200
+
+#define e n * n
+
+#define suma ((1 + e) / 2.) * e
+
+
+
+/* Обрабатывает строчку, проверяя равна ли сумма цифр в ней арифметической прогресии от одного до n
+
+* params:
+
+* int arr[k][k] - обрабатываемый двумерный массив
+
+* int i - номер строки из обрабатываемого двумерного массива
+
+* int n - количество элементов в строчке
+
+* return: флаг типа int, указывающий соответствует ли строка условию
+
+* 0 - не соответствует
+
+* 1 - соответствует
+
+*/
+
+int stroka(int arr[k][k], int i, int n);
+
+
+
+/* Обрабатывает столбик, проверяя равна ли сумма цифр в нем арифметической прогресии от одного до n
+
+* params:
+
+* int arr[k][k] - обрабатываемый двумерный массив
+
+* int j - номер столбца из обрабатываемого двумерного массива
+
+* int n - количество элементов в строчке
+
+* return: флаг типа int, указывающий соответствует ли столбец условию
+
+* 0 - не соответствует
+
+* 1 - соответствует
+
+*/
+
+int stolbik(int arr[k][k], int j, int n);
+
+
+
+/* Обрабатывает квадрат n*n, проверяя равна ли сумма цифр в нем арифметической прогресии от одного до n
+
+* params:
+
+* int n - количество элементов в строчках и столбцах
+
+* return: флаг типа int, указывающий соответствует ли квадрат условию
+
+* 0 - не соответствует
+
+* 1 - соответствует
+
+*/
+
+int qvadrat(int arr[k][k], int n);
+
+
+
+/* Обрабатывает квадрат n*n, проверяя уникальность элементов в нем
+
+* params:
+
+* int n - количество элементов в строчкх и столбцах
+
+* return: флаг типа int, указывающий соответствует ли квадрат условию
+
+* 0 - не соответствует
+
+* 1 - соответствует
+
+*/
+
+int unik_dvumerni(int arr[k][k], int n);
+
+
+
+
+
+int main() {
+
+    int n;
+
+    int flag(0), qwadro(0), strochechka(0), stolbez(0);
+
+    scanf("%d", &n);
+
+    int arr_big[k][k];
+
+    int arr_smal[k][k];
+
+    for (int i = 0; i < e; i++) {
+
+        for (int j = 0; j < e; j++) {
+
+            if (i == e - 1 && j == e - 1)
+
+                scanf("%d", &arr_big[e - 1][e - 1]);
+
+            else
+
+                scanf("%d ", &arr_big[i][j]);
+
+            if (arr_big[i][j] > e || arr_big[i][j] == 0) {
+
+                flag++;
+
+            }
+
+        }
+
+    }
+
+    for (int koofy = 0; koofy <= e - n; koofy += n) {
+
+        for (int koofx = 0; koofx <= e - n; koofx += n) {
+
+            for (int i = 0; i < n; ++i) {
+
+                for (int j = 0; j < n; ++j) {
+
+                    arr_smal[i][j] = arr_big[koofy + i][koofx + j];
+
+                }
+
+            }
+
+            qwadro += qvadrat(arr_smal, n);
+
+        }
+
+    }
+
+    for (int i = 0; i < e; i++) {
+
+        strochechka += stroka(arr_big, i, n);
+
+    }
+
+    for (int j = 0; j < e; j++) {
+
+        stolbez += stolbik(arr_big, j, n);
+
+    }
+
+    int rez(0);
+
+    if (qwadro == e && strochechka == e && stolbez == e && !flag)
+
+        rez++;
+
+    (rez) ? printf("Correct") : printf("Incorrect");
+
+    return 0;
+
+}
+
+
+
+int qvadrat(int arr[k][k], int n) {
+
+    int flag(0);
+
+    int sumaQVA = suma;
+
+    for (int i = 0; i < n; i++) {
+
+        for (int j = 0; j < n; j++) {
+
+            sumaQVA -= arr[i][j];
+
+        }
+
+    }
+
+    int UNIK = unik_dvumerni(arr, n);
+
+    if (!sumaQVA && UNIK)
+
+        flag++;
+
+    return flag;
+
+}
+
+
+
+int stroka(int arr[k][k], int i, int n) {
+
+    int sumaSTR = suma;
+
+    int flag(0);
+
+    for (int j = 0; j < e; j++) {
+
+        sumaSTR -= arr[i][j];
+
+    }
+
+    if (!sumaSTR)
+
+        flag++;
+
+    return flag;
+
+}
+
+
+
+int stolbik(int arr[k][k], int j, int n) {
+
+    int flag(0);
+
+    int sumaSTB = suma;
+
+    for (int i = 0; i < e; i++) {
+
+        sumaSTB -= arr[i][j];
+
+    }
+
+    if (!sumaSTB)
+
+        flag++;
+
+    sumaSTB = suma;
+
+    return flag;
+
+}
+
+
+
+int unik_dvumerni(int arr[k][k], int n) {
+
+    int Unik_flag = 1;
+
+    for (int q = 0; q < n; q++) {
+
+        for (int w = 0; w < n; w++) {
+
+            for (int i = 0; i < n; i++) {
+
+                for (int j = 0; j < n; j++) {
+
+                    if ((q == i && w != j) || (q != i && w == j) || (q != i && w != j)) {
+
+                        if (arr[q][w] == arr[i][j])
+
+                            Unik_flag = 0;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+    return Unik_flag;
+
+}

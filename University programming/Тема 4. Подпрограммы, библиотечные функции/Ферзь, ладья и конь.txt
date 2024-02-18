@@ -1,0 +1,295 @@
+// 19.11.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <iostream>
+
+#define k 200
+
+ 
+
+/* функция определения координат, которые бьет Ферзь
+
+* params:
+
+* int x - координата по буквенной оси
+
+* int  y - координата по числовой оси
+
+* koor[k] - массив в который записываются координаты полей, которые может побить фигура
+
+* return: массив с координатами 
+
+*/
+
+int qeen (int x, int  y, int koor[k]);
+
+
+
+/* функция определения координат, которые бьет ладья
+
+* params:
+
+* int x - координата по буквенной оси
+
+* int  y - координата по числовой оси
+
+* koor[k] - массив в который записываются координаты полей, которые может побить фигура
+
+* return: массив с координатами 
+
+*/
+
+int tura (int x, int y, int koor[k]);
+
+
+
+/* функция определения координат, которые бьет конь
+
+* params:
+
+* int x - координата по буквенной оси
+
+* int  y - координата по числовой оси
+
+* koor[k] - массив в который записываются координаты полей, которые может побить фигура
+
+* return: массив с координатами 
+
+*/
+
+int kon (int x, int y, int koor[k]);
+
+
+
+/* функция определения координат, которые фигуры бьют повторно или на которых стоят
+
+* params:
+
+* koor[k] - массив из которого удаляются совпадающие элементы
+
+* int x - координата по буквенной оси фигуры
+
+* int  y - координата по числовой оси фигуры
+
+* return: массив с координатами 
+
+*/
+
+int unic(int koor[k], int x, int y);
+
+ 
+
+/* взятие числа по модулю
+
+* params:
+
+* int x - проверяемое число
+
+* return: модуль числа
+
+*/
+
+int modul (int x);
+
+ 
+
+int main() {
+
+    int cont(0);
+
+    int koor[k] = { 0 };
+
+    int x, y;
+
+    char s[100];
+
+    std::cin.getline(s, 13);
+
+ 
+
+    char* ptr_Bukva = s;
+
+    char* ptr_Zifra = s + 1;
+
+ 
+
+    int (*figurs[3])(int, int, int*) = {qeen, tura, kon};
+
+ 
+
+    for (int i = 0; i < 3; i++) {
+
+        x = (*ptr_Bukva - 'A') + 1;
+
+        y = (*ptr_Zifra - '0');
+
+        figurs[i](x, y, koor);
+
+        ptr_Bukva += 3;
+
+        ptr_Zifra += 3;
+
+    }
+
+ 
+
+    ptr_Bukva = s;
+
+    ptr_Zifra = s + 1;
+
+ 
+
+    for (int i = 0; i < 3; i++) {
+
+        x = (*ptr_Bukva - 'A') + 1;
+
+        y = (*ptr_Zifra - '0');
+
+        unic(koor, x, y);
+
+        ptr_Bukva += 3;
+
+        ptr_Zifra += 3;
+
+    }
+
+ 
+
+    for (int i = 0; i < k; i++) {
+
+        if (koor[i] != 0)
+
+            cont++;
+
+    }
+
+    printf("%d", cont);
+
+    return 0;
+
+}
+
+ 
+
+int tura(int x, int y, int koor[k]) {
+
+    int* ptr = koor;
+
+    for (int i = 1; i <= 8; i++) {
+
+        for (int j = 1; j <= 8; j++) {
+
+            if (i == x) {
+
+                *ptr = i * 10 + j; ptr++;
+
+            }
+
+            if (j == y) {
+
+                *ptr = i * 10 + j; ptr++;
+
+            }
+
+        }
+
+    }
+
+    return koor[k];
+
+}
+
+ 
+
+int kon(int x, int y, int koor[k]) {
+
+    int* ptr = koor+64;
+
+    for (int i = 1; i <= 8; i++) {
+
+        for (int j = 1; j <= 8; j++) {
+
+            if (((x - i) * (y - j) == 2) || ((x - i) * (y - j) == -2)) {
+
+                *ptr = i * 10 + j; ptr++;
+
+            }
+
+        }
+
+    }
+
+    return koor[k];
+
+}
+
+ 
+
+int qeen(int x, int y, int koor[k]) {
+
+    int* ptr = koor+128;
+
+    for (int i = 1; i <= 8; i++) {
+
+        for (int j = 1; j <= 8; j++) {
+
+            if (i == x) {
+
+                *ptr = i * 10 + j; ptr++;
+
+            }
+
+            if (j == y) {
+
+                *ptr = i * 10 + j; ptr++;
+
+            }
+
+            if (modul(i - x) == modul(j - y)) {
+
+                *ptr = i * 10 + j; ptr++;
+
+            }
+
+        }
+
+    }
+
+    return koor[k];
+
+}
+
+ 
+
+int modul(int x) {
+
+    x = (x >= 0) ? x : -x;
+
+    return x;
+
+}
+
+ 
+
+int unic(int koor[k], int x, int y) {
+
+    for (int i = 0; i < k; i++) {
+
+        for (int j = k; j > i; j--) {
+
+            if (koor[i] == koor[j])
+
+                koor[j] = 0;
+
+            if (koor[i] == x * 10 + y)
+
+                koor[i] = 0;
+
+        }
+
+    }
+
+    return koor[k];
+
+}

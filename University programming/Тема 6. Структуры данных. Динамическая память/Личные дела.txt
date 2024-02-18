@@ -1,0 +1,187 @@
+// 17.12.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+#include <stdlib.h>
+
+#include <string.h>
+
+
+
+// Функция сравнения для сортировки структур jurnal
+
+// параметры:
+
+// const void* a - указатель на элемент class структуры jurnal записанныйв ячейке памяти Jurnal[i]
+
+// const void* b - указатель на элемент class структуры jurnal записанныйв ячейке памяти не Jurnal[i]
+
+// return
+
+// флаг, равный 0, если значения равны, -1, если а > b, 1 если а < b
+
+int cmp_jurnal(const void* a, const void* b);
+
+
+
+// Сортирует когда значения clss не совпадают
+
+// Параметры:
+
+// const char* ptr1 - указатель на class из Jurnal[i]
+
+// const char* ptr2 - указатель на class из не Jurnal[i]
+
+// return 
+
+// flag - -1 - если значения необходимо переставить, 1 если нет
+
+int proverka_foo(const char* ptr1, const char* ptr2);
+
+
+
+// структура, включающая в себя класс, фамилие, имя и дату рождения
+
+// char class[7] - класс
+
+// char first_name[140] - фамилие
+
+// char name[140] - имя
+
+// char data[140] - день рождения
+
+struct jurnal {
+
+    char class[7];
+
+    char first_name[140];
+
+    char name[140];
+
+    char data[140];
+
+};
+
+
+
+int main() {
+
+    int n;
+
+    scanf("%d", &n);
+
+    struct jurnal* Jurnal = calloc(n, sizeof(struct jurnal));
+
+
+
+    for (int i = 0; i < n; i++) {
+
+        scanf("%s", Jurnal[i].first_name);
+
+        scanf("%s", Jurnal[i].name);
+
+        scanf("%s", Jurnal[i].class);
+
+        scanf("%s", Jurnal[i].data);
+
+    }
+
+
+
+    qsort(Jurnal, n, sizeof(struct jurnal), cmp_jurnal);
+
+
+
+    for (int i = 0; i < n; i++) {
+
+        printf("%s %s %s %s\n", Jurnal[i].class, Jurnal[i].first_name, Jurnal[i].name, Jurnal[i].data);
+
+    }
+
+
+
+    free(Jurnal);
+
+    return 0;
+
+}
+
+
+
+int cmp_jurnal(const void* a, const void* b) {
+
+    int flag = 0;
+
+    struct jurnal* ta = (struct jurnal*)a;
+
+    struct jurnal* tb = (struct jurnal*)b;
+
+
+
+    if (strcmp(ta->class, tb->class) != 0) {
+
+        int proverka = proverka_foo(ta->class, tb->class);
+
+        flag = proverka;
+
+    }
+
+    else {
+
+        flag = strcmp(ta->first_name, tb->first_name);
+
+    }
+
+    return flag;
+
+}
+
+
+
+int proverka_foo(const char* ptr1, const char* ptr2) {
+
+    int flag = 0;
+
+    int l1 = 0, l2 = 0;
+
+    char str1[7] = "";
+
+    char str2[7] = "";
+
+    int index = 0;
+
+    while (*ptr1 >= '0' && *ptr1 <= '9') {
+
+        l1++; str1[index] = *ptr1;  ptr1++; index++;
+
+    }
+
+    str1[index] = *ptr1;
+
+    index = 0;
+
+    while (*ptr2 >= '0' && *ptr2 <= '9') {
+
+        l2++; str2[index] = *ptr2; ptr2++; index++;
+
+    }
+
+    str2[index] = *ptr2;
+
+    if (l1 > l2)
+
+        flag = 1;
+
+    else if (l1 < l2)
+
+        flag = -1;
+
+    else
+
+        flag = strcmp(str1, str2);
+
+    return flag;
+
+}

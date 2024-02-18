@@ -1,0 +1,138 @@
+// 23.11.2023 
+
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+#define k 20
+
+
+
+/* Функция расчета минимальной разницы между всеми возможными суммами элементов из заданного массива (рекурсия)
+
+* Параметры:
+
+* int suma1 - текущая сумма мас комней в первом поддереве
+
+* int suma2 - текущая сумма мас комней во втором поддереве
+
+* int* arr - - указатель на массив целых чисел
+
+* return:
+
+* (int) минимальный модуль разности сумм двух поддеревьев
+
+*/
+
+int rastim_derevo(int suma1, int suma2, int* arr);
+
+
+
+/* функция, возвращающая модуль целого числа
+
+* Параметры:
+
+* int x - целое число
+
+* return:
+
+* модуль введеного числа
+
+*/
+
+int modul(int x);
+
+
+
+/*Определяет меньшее из двух представленных чисел
+
+* Параметры:
+
+* int x1 - целое число
+
+* int x2 - еще одно целое число
+
+* return:
+
+* меньшее из двух представленных чисел
+
+*/
+
+int minimum(int x1, int x2);
+
+
+
+int main() {
+
+    int arr[k];
+
+    int n;
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+
+        scanf("%d", &arr[i]);
+
+    }
+
+    arr[n] = -100001;
+
+    int omlet = rastim_derevo(0, 0, arr);
+
+    printf("%d", omlet);
+
+    return 0;
+
+}
+
+
+
+int rastim_derevo(int suma1, int suma2, int* arr) {
+
+    if (*arr != -100001) {
+
+        int otl_1 = rastim_derevo(suma1 + *(arr), suma2, arr + 1);
+
+        int otl_2 = rastim_derevo(suma1, suma2 + *(arr), arr + 1);
+
+        return minimum(otl_1, otl_2);
+
+    }
+
+    else
+
+        return modul(suma1 - suma2);
+
+}
+
+
+
+int modul(int x) {
+
+    if (x < 0)
+
+        x = (-1) * x;
+
+    return x;
+
+}
+
+
+
+int minimum(int x1, int x2) {
+
+    int x = 0;
+
+    if (x1 >= x2)
+
+        x = x2;
+
+    else
+
+        x = x1;
+
+    return x;
+
+}

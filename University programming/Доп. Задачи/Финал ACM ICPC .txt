@@ -1,0 +1,62 @@
+// 06.01.2024
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+ // в структуре хранятся название университета команды и ее id
+typedef struct t_team {
+    char university[31];
+    int id;
+} t_team;
+ //в структуре хранятся названия университетов и количество команд из этого университета, которое встретилось
+typedef struct t_name {
+    char university[31];
+    int cont;
+} t_name;
+ 
+int main() {
+    int n, m, k;
+    scanf("%d %d %d", &n, &m, &k);
+    char grap[31] = "";
+    t_team* teams = (t_team*)calloc(n, sizeof(t_team));
+    gets_s(grap, 2);
+    for (int i = 0; i < n; i++) {
+        gets_s(teams[i].university, 31);
+    }
+ 
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &teams[i].id);
+    }
+ 
+    t_name* names = (t_name*)calloc(n, sizeof(t_name));
+    int flag = 0, i = 0, p = 0;
+ 
+    while (flag < m && i < n) {
+        int f = 0, ex = 0;
+        for (int j = 0; j <= p; j++) {
+            if (strcmp(teams[i].university, names[j].university) == 0 && !ex) {
+                names[j].cont++;
+                f = names[j].cont;
+                ex = 1;
+            }
+        }
+ 
+        if (ex == 0) {
+            strcpy(names[p].university, teams[i].university);
+            names[p].cont = 1;
+            f = names[p].cont;
+            p++;
+        }
+ 
+        if (f <= k) {
+            printf("%s #%d\n", teams[i].university, teams[i].id);
+            flag++;
+        }
+        i++;
+    }
+    free(teams);
+    free(names);
+ 
+    return 0;
+}

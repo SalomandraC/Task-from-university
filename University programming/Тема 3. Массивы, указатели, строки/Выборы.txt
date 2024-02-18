@@ -1,0 +1,33 @@
+// 5.11.2023
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+ 
+int main() {
+    int A[1001];
+    int n;
+    int cont = 0;
+    int min_ = 30000001;
+    int* ptr = A;
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &A[i]);
+        A[i] = A[i] / 2 + 1;
+    }
+     
+    for (int i = 0; i < n / 2 + 1; i++) {
+        int mi_in = 0;
+        for (int j = 0; j < n; j++) {
+            if (min_ > A[j]) {
+                min_ = A[j];
+                mi_in = j;
+            }
+        }
+        cont += min_;
+        A[mi_in] = 3000000;
+        min_ = 3000000;
+    }
+    printf("%d", cont);
+    return 0;
+}

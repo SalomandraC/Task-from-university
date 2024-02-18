@@ -1,0 +1,31 @@
+// 21.12.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+ 
+typedef union IP {
+    unsigned int itog;
+    unsigned char znach[4];
+}t_IP;
+ 
+int main() {
+    int n, m;
+    scanf("%d", &n);
+    t_IP mask[100];
+    for (int i = 0; i < n; i++) {
+        scanf("%hhu.%hhu.%hhu.%hhu", &mask[i].znach[0], &mask[i].znach[1], &mask[i].znach[2], &mask[i].znach[3]);
+    }
+    scanf("%d", &m);
+    for (int j = 0; j < m; j++) {
+        t_IP ip1, ip2;
+        int cont = 0;
+        scanf("%hhu.%hhu.%hhu.%hhu", &ip1.znach[0], &ip1.znach[1], &ip1.znach[2], &ip1.znach[3]);
+        scanf("%hhu.%hhu.%hhu.%hhu", &ip2.znach[0], &ip2.znach[1], &ip2.znach[2], &ip2.znach[3]);
+        for (int i = 0; i < n; i++) {
+            if ((ip1.itog & mask[i].itog) == (ip2.itog & mask[i].itog))
+                cont++;
+        }
+        printf("%d\n", cont);
+    }
+    return 0;
+}

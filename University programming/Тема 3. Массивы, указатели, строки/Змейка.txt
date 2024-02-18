@@ -1,0 +1,38 @@
+// 5.11.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#define NULL 0
+ 
+int main()
+{
+    int A[100][100], n;
+    scanf("%d", &n);
+    int cont(1); int k(1);
+    int flag(1);
+    for (int diog = 0; diog < n * 2 - 1; diog++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i + j == diog) {
+                    if (diog % 2) {
+                        A[j][i] = cont; cont++;
+                    }
+                    else {
+                        A[i][j] = cont; cont++;
+                    }
+                }
+            }
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (j == n - 1) {
+                printf("%3d\n", A[i][j]);
+            }
+            else {
+                printf("%3d ", A[i][j]);
+            }
+        }
+    }
+    return 0;
+}

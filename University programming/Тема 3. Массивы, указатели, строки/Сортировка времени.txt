@@ -1,0 +1,47 @@
+// 5.11.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#define p 600
+ 
+int main() {
+    int time, n, h, m, s, c(0), min(0), buf(0);
+    scanf("%d", &n);
+    int A[p][3];
+    for (int i = 0; i < n; i++) {
+        int j = 0;
+        scanf("%d %d %d", &A[i][j], &A[i][j+1], &A[i][j+2]);
+    }
+    int Hours = 0;
+    int Mins = 0;
+    int Sek = 0;
+    for (int i = 0; i < n-1; i++) {
+        int min = i;
+        for (int j = i+1; j < n; j++) {
+            if (A[j][0] < A[min][0])
+                min = j;
+            else if (A[j][1] < A[min][1] && A[j][0] == A[min][0])
+                min = j;
+            else if (A[j][2] < A[min][2] && A[j][1] == A[min][1] && A[j][0] == A[min][0])
+                min = j;
+        }
+        Hours = A[i][0];
+        A[i][0] = A[min][0];
+        A[min][0] = Hours;
+        Mins = A[i][1];
+        A[i][1] = A[min][1];
+        A[min][1] = Mins;
+        Sek = A[i][2];
+        A[i][2] = A[min][2];
+        A[min][2] = Sek;
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (j != 2)
+                printf("%d ", A[i][j]);
+            else
+                printf("%d\n", A[i][j]);
+        }
+    }
+    return 0;
+}

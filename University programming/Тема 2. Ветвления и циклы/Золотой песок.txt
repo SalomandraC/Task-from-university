@@ -1,0 +1,66 @@
+// 20.10.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+ 
+int main()
+{
+    int A1, A2, A3, B1, B2, B3;
+    int A_max, A_min, A_mid, B_max, B_min, B_mid, itog;
+    scanf("%d %d %d %d %d %d", &A1, &A2, &A3, &B1, &B2, &B3);
+ 
+    if (A1 > A2)
+        if (A2 > A3) {
+            A_max = A1; A_mid = A2; A_min = A3;
+        }
+        else {
+            if (A1 > A3) {
+                A_max = A1; A_mid = A3; A_min = A2;
+            }
+            else {
+                A_max = A3; A_mid = A1; A_min = A2;
+            }
+        }
+    else
+        if (A2 < A3) {
+            A_max = A3; A_mid = A2; A_min = A1;
+        }
+        else
+            if (A1 > A3) {
+                A_max = A2; A_mid = A1; A_min = A3;
+            }
+            else {
+                A_max = A2; A_mid = A3; A_min = A1;
+            }
+ 
+ 
+ 
+    if (B1 > B2)
+        if (B2 > B3) {
+            B_max = B1; B_mid = B2; B_min = B3;
+        }
+        else {
+            if (B1 > B3) {
+                B_max = B1; B_mid = B3; B_min = B2;
+            }
+            else {
+                B_max = B3; A_mid = B1; A_min = B2;
+            }
+        }
+    else
+        if (B2 < B3) {
+            B_max = B3; B_mid = B2; B_min = B1;
+        }
+        else
+            if (B1 > B3) {
+                B_max = B2; B_mid = B1; B_min = B3;
+            }
+            else {
+                B_max = B2; B_mid = B3; B_min = B1;
+            }
+ 
+    itog = B_max*A_max+B_mid*A_mid+B_min*A_min;
+ 
+    printf("%d", itog);
+    return 0;
+}

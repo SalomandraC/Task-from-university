@@ -1,0 +1,74 @@
+// 08.01.2024
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+ 
+// пользовательская структура, которая включчет в себя
+// char poezd[60] - название поезда
+// int time1[2] - данные о времени отбытия
+// int time2[2] - данные о времени прибытия
+// double speed - информацию об его скорости
+typedef struct t_train {
+    char poezd[60];
+    int time1[2];
+    int time2[2];
+    double speed;
+} t_train;
+ 
+// Функция сравнения для сортировки структуры t_train
+
+// параметры:
+
+// const void* a - указатель на элемент speed структуры t_train
+
+// const void* b - указатель на элемент speed структуры t_train 
+
+// return
+
+// флаг, равный 0, если значения равны; 1, если а > b; -1 если а < b
+
+int compare_train(const void* a, const void* b);
+ 
+int main() {
+    FILE* fin = fopen("input.txt", "r");
+    FILE* fout = fopen("output.txt", "w");
+ 
+    int n = 0;
+    fscanf(fin, "%d", &n);
+    t_train* train = (t_train*)calloc(n, sizeof(t_train));
+    for (int i = 0; i < n; i++) {
+        fscanf(fin, " \"%59[^\"]\" %d:%d %d:%d", train[i].poezd, &train[i].time1[0], &train[i].time1[1], &train[i].time2[0], &train[i].time2[1]);
+        double time1 = train[i].time1[0] * 60 + train[i].time1[1];
+        double time2 = train[i].time2[0] * 60 + train[i].time2[1];
+        double time;
+        if (time2 <= time1) {
+            time = (1440 - time1) + time2;
+        }
+        else {
+            time = time2 - time1;
+        }
+ 
+        double speed_ = 650. / time * 60.;
+        train[i].speed = speed_ + 0.5;
+    }
+    qsort(train, n, sizeof(t_train), compare_train);
+    int otvet_speed = (int)train[n - 1].speed;
+    fprintf(fout, "The fastest train is \"%s\".\n", train[n - 1].poezd);
+    fprintf(fout, "Its speed is %d km/h, approximately.", otvet_speed);
+ 
+    free(train);
+    fclose(fin);
+    fclose(fout);
+    return 0;
+}
+ 
+int compare_train(const void* a, const void* b) {
+    const t_train* ta = (const t_train*)a;
+    const t_train* tb = (const t_train*)b;
+    if (ta->speed < tb->speed) return -1;
+    if (ta->speed > tb->speed) return 1;
+    return 0;
+}

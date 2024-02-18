@@ -1,0 +1,23 @@
+// 9.11.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+ 
+int main(void) {
+    char s_Vasa[5], s_Petia[5];
+    int biki = 0, korovi = 0;
+    scanf("%s %s", s_Vasa, s_Petia);
+    for (int i = 0; i < 4; i++) {
+        if (s_Vasa[i] == s_Petia[i])
+            biki++;
+    }
+ 
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (s_Vasa[i] == s_Petia[j])
+                korovi++;
+        }
+    }
+    printf("%d %d", biki, korovi - biki);
+    return 0;
+}

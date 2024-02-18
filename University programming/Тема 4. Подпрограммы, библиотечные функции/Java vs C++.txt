@@ -1,0 +1,56 @@
+// 22.11.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <iostream>
+#include <string.h>
+#define k 10000
+ 
+int main() {
+    char str[k];
+    int flag_c = 0, flag_J = 0, flag_error = 0;
+    scanf("%s", str);
+    char* ptr = str;
+    int i = 1;
+    int g = strlen(str);
+    if ((*ptr == '_') || (*ptr >= 'A' && *ptr <= 'Z') || str[g - 1] == '_')
+        flag_error++;
+    ptr++;
+    while (*ptr) {
+        if ((*ptr == '_' && *(ptr + 1) == '_'))
+            flag_error++;
+        if (*ptr == '_')
+            flag_c++;
+        if (*ptr >= 'A' && *ptr <= 'Z')
+            flag_J++;
+        ptr++;
+    }
+    if (flag_error || (flag_c && flag_J))
+        printf("Error!");
+    else if (flag_c) {
+        char* ptr = strtok(str, "_");
+        std::cout << ptr;
+        ptr = strtok(NULL, "_");
+        while (ptr != NULL)
+        {
+            ptr[0] = ptr[0] - 'a' + 'A';
+            std::cout << ptr;
+            ptr = strtok(NULL, "_");
+        }
+    }
+    else if (flag_J) {
+        char* ptr = str;
+        while (*ptr) {
+            char x = *ptr - 'A' + 'a';
+            if (*ptr >= 'A' && *ptr <= 'Z')
+                std::cout << '_' << x;
+            else
+                std::cout << *ptr;
+            ptr++;
+        }
+    }
+    else {
+        printf("%s", str);
+    }
+    return 0;
+}

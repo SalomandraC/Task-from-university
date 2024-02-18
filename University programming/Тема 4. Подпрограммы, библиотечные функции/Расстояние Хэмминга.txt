@@ -1,0 +1,119 @@
+// 19.11.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <iostream>
+
+#define k 60*1024*8+1
+
+ 
+
+/* Сравнивает два массива на отличия (оба массива равны по длине и состоят из одинаковых элементов)
+
+* params:
+
+* char str1[k] - первый массив
+
+* char str2[k] - второй массив
+
+* int l - длина массивов
+
+* return: количество отличных элементов 
+
+*/
+
+int different(char str1[k], char str2[k], int l);
+
+ 
+
+int arr[k], arr_i[k] = { 0 };
+
+char str[k];
+
+char change_str[k];
+
+ 
+
+int main(void)
+
+{
+
+    int cont(0), l(0);
+
+    int n;
+
+    std::cin.getline(str, k);
+
+    char* ptr = str;
+
+    while (*ptr == '1' || *ptr == '0') {
+
+        l++; ptr++;
+
+    }
+
+    int min = l + 1;
+
+    scanf("%d", &n);
+
+    for (int i = 0; i <= n; i++) {
+
+        std::cin.getline(change_str, k);
+
+        arr[i] = different(str, change_str, l);
+
+    }
+
+    for (int i = 0; i <= n; i++) {
+
+        if (arr[i] < min)
+
+            min = arr[i];
+
+    }
+
+    for (int i = 0; i <= n; i++) {
+
+        if (arr[i] == min) {
+
+            arr_i[i] = i; cont++;
+
+        }
+
+    }
+
+    cont = (n > 0) ? cont : 0;
+
+    printf("%d\n", cont);
+
+    for (unsigned long long int i = 0; i < k; i++) {
+
+        if (arr_i[i] != 0)
+
+            printf("%d ", arr_i[i]);
+
+    }
+
+    return 0;
+
+}
+
+ 
+
+ 
+
+int different(char str1[k], char str2[k], int l) {
+
+    int otl(0);
+
+    for (int i = 0; i < l; i++) {
+
+        if (str1[i] != str2[i])
+
+            otl++;
+
+    }
+
+    return otl;
+
+}

@@ -1,0 +1,133 @@
+https://informatics.msk.ru/mod/statements/view.php?id=206&chapterid=50#1
+//18.02.2024
+
+#include <iostream>
+using namespace std;
+
+/* Структура, описывающая элемент линейного списка
+char data - значение
+Item* next - указатель на следующий элемент
+*/
+struct Item {
+    Item* next = nullptr;
+    int data;
+};
+
+typedef Item* List;
+
+/* Функция добавления нового элемента в конец списка с клавиатуры
+List& head - ссылка на голову заполняемого списка
+return: ничего
+*/
+void create(List& head) {
+    int F;
+    List cur = head;
+    cin >> F;
+    List last = new Item;
+    last->data = F;
+    last->next = nullptr;
+
+    if (head == nullptr) {
+        head = last;
+    }
+    else {
+        while (cur->next != nullptr) {
+            cur = cur->next;
+        }
+        cur->next = last;
+    }
+}
+
+/* Функция переноса головы списка в отдельный элемент
+List& head - ссылка на переносимую голову списка
+List& cur - ссылка на элемент, в который переносим голову
+return: ничего
+*/
+void takeEl(List& cur, List& head) {
+    cur->data = head->data;
+    List temp = head;
+    head = head->next;
+    delete temp;
+}
+
+/* Функция переноса элемента в конец списка
+List& head - ссылка на переносимую голову списка
+List& cur - ссылка на элемент, в который переносим голову
+return: ничего
+*/
+void doTale(List& head, List tale) {
+    if (head == nullptr) {
+        head = tale;
+    }
+    else {
+        List cur = head;
+        while (cur->next != nullptr) {
+            cur = cur->next;
+        }
+        cur->next = tale;
+    }
+}
+
+/* Функция очистка списка
+List& head - ссылка на голову списка, подвергающегося очищению
+return: ничего
+*/
+void freeList(List& head) {
+    while (head != nullptr) {
+        List temp = head;
+        head = head->next;
+        delete temp;
+    }
+}
+
+int main() {
+    int step = 0;
+    List armFirst = nullptr;
+    List armSecond = nullptr;
+
+    for (int i = 0; i < 5; i++) {
+        create(armFirst);
+    }
+    for (int i = 0; i < 5; i++) {
+        create(armSecond);
+    }
+
+    while (step <= 1000000 && armFirst != nullptr && armSecond != nullptr) {
+        List firstEl = new Item;
+        List secondEl = new Item;
+        takeEl(firstEl, armFirst);
+        takeEl(secondEl, armSecond);
+
+        if (firstEl->data == 0 && secondEl->data == 9) {
+            doTale(armFirst, firstEl);
+            doTale(armFirst, secondEl);
+        }
+        else if (firstEl->data == 9 && secondEl->data == 0) {
+            doTale(armSecond, firstEl);
+            doTale(armSecond, secondEl);
+        }
+        else if (firstEl->data > secondEl->data) {
+            doTale(armFirst, firstEl);
+            doTale(armFirst, secondEl);
+        }
+        else {
+            doTale(armSecond, firstEl);
+            doTale(armSecond, secondEl);
+        }
+        ++step;
+    }
+    if (step > 1000000) {
+        cout << "botva";
+    }
+    else if (armFirst == nullptr) {
+        cout << "second " << step;
+    }
+    else {
+        cout << "first " << step;
+    }
+
+    freeList(armFirst);
+    freeList(armSecond);
+
+    return 0;
+}

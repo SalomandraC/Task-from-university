@@ -1,0 +1,14 @@
+// 07.10.2023
+#include <iostream>
+using namespace std;
+ 
+int main()
+{
+    //инициализация переменных
+    long long int w, h, r;
+    //ввод
+    cin >> w >> h >> r;
+     
+    //вывод
+    (w >= 2*r && h >= 2*r) ? (cout << "YES") : (cout << "NO");
+}

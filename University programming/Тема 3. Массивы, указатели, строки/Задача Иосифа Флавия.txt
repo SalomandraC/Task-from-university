@@ -1,0 +1,33 @@
+// 5.11.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#define p 600
+ 
+int main() {
+    int n, die(0), ch, suma(0);
+    scanf("%d %d", &n, &ch);
+    int A[p];
+    for (int i = 0; i < n; i++) {
+        A[i] = i + 1; suma += A[i];
+    }
+    int* ptr = A;
+    int cont(0);
+    int i(0);
+    while (die != n - 1) {
+        if (A[i] != 0) {
+            cont++;
+            if (cont == ch) {
+                suma -= A[i];
+                A[i] = 0;
+                die++;
+                cont = 0;
+            }
+ 
+        }
+        i = ++i % n;
+    }
+    printf("%d", suma);
+    return 0;
+}
+

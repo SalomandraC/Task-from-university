@@ -1,0 +1,196 @@
+// 08.01.2024
+
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+#include <string.h>
+
+#include <stdlib.h>
+
+
+
+// функция для сложения двух чисел, представленных в виде строк
+
+// Параметры
+
+// const char* str1 - указатель на первое число
+
+// const char* str2 - указатель на второе число
+
+// char* itog - указатель на массив чаров, в который будет записан результат сложения
+
+// return:
+
+// ничего
+
+void sum_3(const char* str1, const char* str2, char* itog);
+
+
+
+// функция реверса строки
+
+// Параметры
+
+// char* p_arr - указатель на реверсиемую строку
+
+// int n - длина реверсиемой строки
+
+// return:
+
+// ничего
+
+void reverse(char* p_arr, int n);
+
+
+
+// функция для сложения двух чисел, представленных в виде строк
+
+// Параметры
+
+// const char* ptr1 - указатель на первое число
+
+// const char* ptr2 - указатель на второе число
+
+// char* buffer_sum - указатель на массив чаров, в который будет записан результат сложения
+
+// int l - длина наибольшей из сладываемых строк
+
+// return:
+
+// ничего
+
+void char_sum(const char* ptr1, const char* ptr2, char* buffer_sum, int l);
+
+
+
+int main() {
+
+    char chislo1[100] = "";
+
+    char chislo2[100] = "";
+
+    char suma_3[100] = "";
+
+
+
+    scanf("%s %s", chislo1, chislo2);
+
+
+
+    sum_3(chislo1, chislo2, suma_3);
+
+
+
+    unsigned long long int result = 0;
+
+    reverse(suma_3, strlen(suma_3));
+
+    for (int i = 0; i < strlen(suma_3); i++) {
+
+        result *= 3;
+
+        result += (suma_3[i] - '0');
+
+    }
+
+
+
+    printf("%llu", result);
+
+
+
+    return 0;
+
+}
+
+
+
+void sum_3(const char* str1, const char* str2, char* itog) {
+
+    char buffer1[100] = "";
+
+    char buffer2[100] = "";
+
+
+
+    strcpy(buffer1, str1);
+
+    strcpy(buffer2, str2);
+
+    reverse(buffer1, strlen(buffer1));
+
+    reverse(buffer2, strlen(buffer2));
+
+
+
+    int l1 = strlen(buffer1), l2 = strlen(buffer2);
+
+    while (l1 < l2) {
+
+        buffer1[l1++] = '0'; 
+
+    }
+
+    while (l2 < l1) { 
+
+        buffer2[l2++] = '0'; 
+
+    }
+
+    buffer1[l1] = '\0';
+
+    buffer2[l2] = '\0';
+
+
+
+    char_sum(buffer1, buffer2, itog, strlen(buffer1));
+
+}
+
+
+
+void reverse(char* p_arr, int n) {
+
+    for (int i = 0; i < n / 2; i++) {
+
+        char t = p_arr[i];
+
+        p_arr[i] = p_arr[n - 1 - i];
+
+        p_arr[n - 1 - i] = t;
+
+    }
+
+    p_arr[n] = '\0';
+
+}
+
+
+
+void char_sum(const char* ptr1, const char* ptr2, char* buffer_sum, int l) {
+
+    int car = 0;
+
+    for (int i = 0; i < l; i++) {
+
+        int sumbol = (ptr1[i] - '0') + (ptr2[i] - '0') + car;
+
+        buffer_sum[i] = (sumbol % 3) + '0';
+
+        car = sumbol / 3;
+
+    }
+
+    if (car > 0) {
+
+        buffer_sum[l] = car + '0';
+
+        l++;
+
+    }
+
+    buffer_sum[l] = '\0';
+
+}

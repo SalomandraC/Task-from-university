@@ -1,0 +1,158 @@
+// 04.01.2024
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+#include <stdlib.h>
+
+#define k 4
+
+
+
+// функция нахождения "неправильной суммы"
+
+// параметры:
+
+// unsigned long long int a - первое число, подвергающееся "неправильному сложению"
+
+// unsigned long long int b - второе число, подвергающееся "неправильному сложению"
+
+// return:
+
+// неправильную сумму
+
+unsigned long long int foo_sum(unsigned long long int a, unsigned long long int b);
+
+// Функция сравнения для сортировки массива sumi
+
+// параметры:
+
+// const void* a - указатель на элемент массива sumi
+
+// const void* b - указатель на элемент массива sumi
+
+// return
+
+// флаг, равный 0, если значения равны, 1, если а > b, -1 если а < b
+
+
+int compare(const void* a, const void* b);
+
+
+
+int main() {
+
+    unsigned long long int a1, a2, a3;
+
+    unsigned long long int  sumi[k] = { 0 };
+
+    unsigned long long int itog[k] = { 0 };
+
+    scanf("%llu %llu %llu", &a1, &a2, &a3);
+
+
+
+    sumi[1] = foo_sum(a2, foo_sum(a1, a3)); 
+
+    sumi[2] = foo_sum(a1, foo_sum(a2, a3));
+
+    sumi[3] = foo_sum(a3, foo_sum(a1, a2));
+
+
+
+    qsort(sumi, k, sizeof(unsigned long long int), compare);
+
+
+
+    int cont = 0;
+
+    for (int i = 1; i < 4; i++) {
+
+        if (sumi[i] != sumi[i+1]) {
+
+            itog[cont] = sumi[i];
+
+            cont++;
+
+        }
+
+    }
+
+    (cont > 1) ? printf("YES\n") : printf("NO\n");
+
+    for (int i = 0; i < cont; i++) {
+
+        printf("%llu\n", itog[i]);
+
+    }
+
+
+
+    return 0;
+
+}
+
+
+
+unsigned long long int foo_sum(unsigned long long int a, unsigned long long int b) {
+
+    unsigned long long int suma = 0;
+
+    unsigned long long int d = 1;
+
+    int sumbol;
+
+    while (a + b > 0) {
+
+        sumbol = a % 10 + b % 10;
+
+        suma += (d * sumbol);
+
+        while (d <= suma) {
+
+            d *= 10;
+
+        }
+
+        if (!sumbol)
+
+            d *= 10;
+
+        a /= 10;
+
+        b /= 10;
+
+    }
+
+    return suma;
+
+}
+
+
+
+int compare(const void* a, const void* b) {
+
+    int flag = 0;
+
+    unsigned long long int ch1 = *((unsigned long long int*)a);
+
+    unsigned long long int ch2 = *((unsigned long long int*)b);
+
+
+
+    if (ch1 == ch2) 
+
+        flag = 0;
+
+    else if (ch1 < ch2)
+
+        flag = -1;
+
+    else 
+
+        flag = 1;
+
+    return flag;
+
+}

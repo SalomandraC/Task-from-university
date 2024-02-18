@@ -1,0 +1,107 @@
+// 19.11.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <iostream>
+
+ 
+
+/*
+
+* Нахождение ответа кто добрался до норки быстрее
+
+* Параметры: int x1, int y1 -координаты суслика
+
+* int x2, int y2 - координаты собаки
+
+* int x, int y - координаты норки
+
+* Возвращает флаг, указывающий, добрался ли суслик быстрее
+
+*/
+
+int suslik_die_or_not(int x1, int y1, int x2, int y2, int x, int y);
+
+ 
+
+/*
+
+*Нахождение расстояния от заданной координаты животного до норки
+
+* Параметры: int x1, int y2 - координаты животного
+
+* int x, int y - координаты норки
+
+* Возвращает расстояние от животного до норки
+
+*/
+
+ 
+
+double dist(int x1, int y1, int x, int y);
+
+ 
+
+int main()
+
+{
+
+    int cont(0);
+
+    int x1(0), x2(0), y1(0), y2(0);
+
+    int n;
+
+    scanf("%d %d", &x1, &y1);
+
+    scanf("%d %d", &x2, &y2);
+
+    scanf("%d", &n);
+
+    for (int i = 1; i <= n; i++) {
+
+        int x, y, ans = 0;
+
+        scanf("%d %d", &x, &y);
+
+        ans = suslik_die_or_not(x1, y1, x2, y2, x, y);
+
+        if (ans && !cont)
+
+            cont = i;
+
+    }
+
+    (cont) ? printf("%d", cont) : printf("NO");
+
+}
+
+ 
+
+ 
+
+double dist(int x1, int y1, int x, int y) {
+
+    return ((x1 - x) * (x1 - x) + (y1 - y) * (y1 - y));
+
+}
+
+ 
+
+ 
+
+int suslik_die_or_not(int x1, int y1, int x2, int y2, int x, int y) {
+
+    int flag(0);
+
+    double l1 = dist(x1, y1, x, y);
+
+    double l2 = dist(x2, y2, x, y);
+
+    if (l2 / 4 - l1 >= 0)
+
+        flag++;
+
+    return flag;
+
+}

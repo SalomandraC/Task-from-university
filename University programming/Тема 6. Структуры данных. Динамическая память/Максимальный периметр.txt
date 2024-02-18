@@ -1,0 +1,141 @@
+// 17.12.2023
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+#include <stdlib.h>
+
+#include <math.h>
+
+
+
+typedef int int32;
+
+
+
+// определяет расстояние между 2 точками
+
+// параметры:
+
+// int32 x1 - x первой точки
+
+// int32 y1 - y первой точки
+
+// int32 x - x второй точки
+
+// int32 y - y второй точки
+
+double dist(int32 x1, int32 y1, int32 x, int32 y);
+
+
+
+// находит периметр треугольника по 3 точкам
+
+// параметры:
+
+// int32 x1 - x первой точки
+
+// int32 y1 - y первой точки
+
+// int32 x2 - x второй точки
+
+// int32 y2 - y второй точки
+
+// int32 x3 - x третьей точки
+
+// int32 y3 - y третьей точки
+
+// return
+
+// периметр треугольника
+
+double perimetr(int32 x1, int32 y1, int32 x2, int32 y2, int32 x3, int32 y3);
+
+
+
+int main() {
+
+    int32 n;
+
+    double max = -1.;
+
+    scanf("%d", &n);
+
+    int32** ptrArrays = (int32**)malloc(n * sizeof(int32*));
+
+    for (int i = 0; i < n; i++) {
+
+        ptrArrays[i] = (int32*)malloc(2 * sizeof(int32));
+
+        scanf("%d %d", &ptrArrays[i][0], &ptrArrays[i][1]);
+
+    }
+
+    for (int p1 = 0; p1 < n-2; p1++) {
+
+        for (int p2 = p1 + 1; p2 < n-1; p2++) {
+
+            for (int p3 = p2 + 1; p3 < n; p3++) {
+
+                double per = perimetr(ptrArrays[p1][0], ptrArrays[p1][1], 
+
+				     ptrArrays[p2][0], ptrArrays[p2][1],
+
+                        	     ptrArrays[p3][0], ptrArrays[p3][1]);
+
+                if (per > max)
+
+                    max = per;
+
+            }
+
+        }
+
+    }
+
+
+
+    printf("%.15lf", max);
+
+    for (int i = 0; i < n; i++) {
+
+        free(ptrArrays[i]);
+
+    }
+
+    free(ptrArrays);
+
+
+
+    return 0;
+
+}
+
+
+
+double dist(int32 x1, int32 y1, int32 x, int32 y) {
+
+    double omlet = sqrt((x1 - x) * (x1 - x) + (y1 - y) * (y1 - y));
+
+    return omlet;
+
+}
+
+
+
+double perimetr(int32 x1, int32 y1, int32 x2, int32 y2, int32 x3, int32 y3) {
+
+    double omlet = 0.;
+
+    double s1 = dist(x1, y1, x2, y2);
+
+    double s2 = dist(x1, y1, x3, y3);
+
+    double s3 = dist(x2, y2, x3, y3);
+
+    omlet = s1 + s2 + s3;
+
+    return omlet;
+
+}
