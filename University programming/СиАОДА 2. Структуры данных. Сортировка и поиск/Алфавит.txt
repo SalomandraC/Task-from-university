@@ -1,0 +1,49 @@
+/*
+https://acmp.ru/index.asp?main=task&id_task=878
+28.02.2024
+*/
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+//Структура, описывающая ребенка
+//char Alf - буква, которую знает ребенок
+//int namber - номер ребенка
+struct child{
+	char Alf[3];
+	int namber = 0;
+};
+
+//Функция для сравнения двух элементов типа структуры Child по Alf
+//const child a - первый сравниваемый элемент
+//const child b - второй сравниваемый элемент
+//return: 0 при a == b; 1 при a<b; -1 при a>b
+bool compPerson(const child a, const child b) {
+	return a.Alf[0] < b.Alf[0];
+}
+
+int main() {
+	std::vector<child>person(26);
+	for (int i = 0; i < 26; ++i) {
+		std::cin >> person[i].Alf[0];
+		person[i].namber = i+1;
+	}
+	std::sort(person.begin(), person.end(), compPerson);
+	int k = 0, flag = 0;
+	for (int i = 0; i < 26; ++i) {
+		int be = person[i].Alf[0] - 'A';
+		if (!(k <= be)) {
+			flag = 1;
+		}
+		++k;
+	}
+	if (flag == 1) {
+		std::cout << "NO";
+	} 
+	else {
+		std::cout << "YES\n";
+		for (int i = 0; i < 26; ++i) {
+			std::cout << person[i].namber << ' ';
+		}
+	}
+}

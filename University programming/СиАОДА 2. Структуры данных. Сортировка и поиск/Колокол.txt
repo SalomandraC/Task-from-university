@@ -1,0 +1,98 @@
+/*
+https://acmp.ru/index.asp?main=task&id_task=686
+28.02.2024
+*/
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+/* Структура, описывающая элемент линейного списка
+int data - значение элемента
+Item* next - указатель на следующий элемент
+*/
+struct Item {
+    Item* next = nullptr;
+    int data;
+};
+
+typedef Item* List;
+
+//Функция для сравнения двух элементов типа int
+//const int first - первый сравниваемый элемент
+//const int second - второй сравниваемый элемент
+//return: 0 при first == first; -1 при first<second; 1 при first>second
+bool comp(const int first, const int second) {
+    return (first > second);
+}
+
+//Функция добавления элемента в начало списка
+//int a - значение элемента
+//List& head - ссылка на начало списка
+//return: ничего
+void pushFront(int a, List& head) {
+    List p = new Item;
+    p->data = a;
+    p->next = head;
+    head = p;
+}
+
+//Функция добавления элемента в конецо списка
+//int a - значение элемента
+//List& tail - ссылка на конец списка
+//return: ничего
+void pushBack(int a, List& tail) {
+    List p = new Item;
+    p->data = a;
+    tail->next = p;
+    tail = p;
+}
+
+
+//Функция вывода значений элементов списка и его последующего удаления
+//List& head - ссылка на начало списка
+//return: ничего
+void vivod(List& head) {
+    while (head->next != nullptr) {
+        List cur = new Item;
+        std::cout << head->data << ' ';
+        cur = head;
+        head = head->next;
+        delete cur;
+    }
+    std::cout << head->data << ' ';
+    delete head;
+}
+
+int main() {
+    int N = 0;
+    std::cin >> N;
+    std::vector<int> arr(N);
+    List head = nullptr;
+    List tail = nullptr;
+    head = new Item;
+    for (int i = 0; i < N; i++) {
+        std::cin >> arr[i];
+    }
+    std::sort(arr.begin(), arr.end(), comp);
+
+    head->data = arr[0];
+    tail = head;
+    if ((N % 2)) {
+        for (int i = 1; i < N; i++) {
+            if (!(i % 2))
+                pushFront(arr[i], head);
+            else
+                pushBack(arr[i], tail);
+        }
+    }
+    else {
+        for (int i = 1; i < N; i++) {
+            if (!(i % 2))
+                pushBack(arr[i], tail);
+            else
+                pushFront(arr[i], head);
+        }
+    }
+    vivod(head);
+    return 0;
+}

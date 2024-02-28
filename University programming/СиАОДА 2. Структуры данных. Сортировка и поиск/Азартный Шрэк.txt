@@ -1,0 +1,34 @@
+/*
+https://acmp.ru/index.asp?main=task&id_task=648
+28.02.2024
+*/
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+//Функция для сравнения двух элементов типа int
+//const int first - первый сравниваемый элемент
+//const int second - второй сравниваемый элемент
+//return: 0 при a == b; 1 при a>b; -1 при a<b
+bool comp(const int a, const int b) {
+	return a > b;
+}
+
+int main(){
+	int N = 0;
+	std::cin >> N;
+	std::vector<int>arr(N);
+	for (int i = 0; i < N; ++i) {
+		std::cin>>arr[i];
+	}
+	std::sort(arr.begin(), arr.end(), comp);
+	int player = 0, krupe = 0;
+	for (int i = 0; i < N/2; ++i) {
+		player += arr[i];
+	}
+	for (int i = N / 2; i < N; ++i) {
+		krupe += arr[i];
+	}
+	std::cout << player - krupe;
+	return 0;
+}
