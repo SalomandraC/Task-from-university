@@ -1,0 +1,90 @@
+//https://informatics.msk.ru/mod/statements/view.php?id=11575&chapterid=112506#1
+
+#include <iostream>
+
+/* Структура, описывающая элемент линейного списка
+char data - значение
+Item* next - указатель на следующий элемент
+*/
+struct Item {
+    Item* next = nullptr;
+    Item* prev = nullptr;
+    int data;
+};
+
+typedef Item* List;
+
+// Функция для добавления элемента со значением i в конец списка
+// List& head - ссылка на голову
+// List& tail - ссылка на хвост
+// int i - значение нового элемента
+// возвращает: ничего
+void create(List& head, List& tail, int i);
+
+// Функция для удаления элемента из циклического списка
+// List& current - ссылка на удаляемый элемент
+// возвращает: ничего
+void clear(List& current);
+
+// Функция для удаления каждого dead-ого элемента из циклического списка
+// List& head - ссылка на список, из которого удаляются элементы
+// int n - количество удаляемых элементов
+// int dead - номер удаляемого элемента
+// возвращает: ничего
+void myDelete(List& head, int n, int dead);
+
+int main() {
+    int n = 0, dead = 0;
+    List head = nullptr;
+    List tail = nullptr;
+    tail = head;
+    std::cin >> n;
+    for (int i = 1; i <= n; i++) {
+        create(head, tail, i);
+    }
+    std::cin >> dead;
+    tail->next = head;
+    head->prev = tail;
+    myDelete(head, n, dead);
+    return 0;
+}
+
+void create(List& head, List& tail, int i) {
+    List p = new Item;
+    p->data = i;
+    p->next = nullptr;
+    if (head == nullptr) {
+        head = p;
+        tail = head;
+    }
+    else {
+        p->prev = tail;
+        tail->next = p;
+        tail = p;
+    }
+}
+
+void clear(List& current) {
+    List temp = current;
+    std::cout << temp->data << ' ';
+    current->prev->next = temp->next;
+    temp->next->prev = current->prev;
+    current = current->next;
+    delete temp;
+}
+
+void myDelete(List& head, int n, int dead) {
+    int cont = 1;
+    List cur = head;
+    for (int i = 0; i < n; ) {
+        if (cont == dead) {
+            clear(cur);
+            cont = 1;
+            i++;
+        }
+        else {
+            cur = cur->next;
+            cont++;
+        }
+    }
+}

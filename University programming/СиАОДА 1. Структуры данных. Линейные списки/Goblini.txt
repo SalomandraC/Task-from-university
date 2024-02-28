@@ -1,0 +1,169 @@
+//https://informatics.msk.ru/mod/statements/view.php?id=206&chapterid=112984#1
+#include <iostream>
+
+/* Структура, описывающая элемент линейного списка
+char data - значение
+Item* next - указатель на следующий элемент
+*/
+struct Item {
+    Item* next = nullptr;
+    Item* prev = nullptr;
+    int data;
+};
+
+typedef Item* List;
+
+// Функция для перемещения головы второго списка в конец первого
+// List& head1 - голова первого списка
+// List& tail1 - хвост первого списка
+// List& head2 - голова второго списка
+// List& tail2 - хвост второго списка
+// возвращает: ничего
+void terrorize(List& head1, List& tail1, List& head2, List& tail2);
+
+// Функция для добавления обычного гоблина (добавления элемента в конец списка)
+// List& head - ссылка на голову списка
+// List& tail - ссылка на хвост списка
+// возвращает: ничего
+void goblin(List& head, List& tail);
+
+// Функция для добавления особого гоблина (добавления элемента в начало списка)
+// List& head - ссылка на голову списка
+// List& tail - ссылка на хвост списка
+// возвращает: ничего
+void Goblin(List& head, List& tail);
+
+// Функция для вывода значения и удаления головы списка
+// List& head - ссылка на голову списка
+// возвращает: ничего
+void shaman(List& head);
+
+// Функция для вывода значений списка по порядку
+// List& head - ссылка на голову списка
+// возвращает: ничего
+void chek(List& head);
+
+// Функция для очистки памяти от списка
+// List& head - ссылка на голову списка
+// возвращает: ничего
+void freeList(List& head);
+
+int main() {
+    int n = 0, size1 = 0, size2 = 0;
+    char boo[3] = "";
+    List head1 = nullptr;
+    List tail1 = nullptr;
+    List head2 = nullptr;
+    List tail2 = nullptr;
+    tail1 = head1;
+    tail2 = head2;
+    std::cin >> n;
+    for (int i = 0; i < n; ++i) {
+        std::cin >> boo;
+        if (boo[0] == '+') {
+            goblin(head2, tail2);
+            size2++;
+        }
+        else if (boo[0] == '*') {
+            Goblin(head2, tail2);
+            size2++;
+        }
+        else if (boo[0] == '-') {
+            shaman(head1);
+            if (head1 == nullptr)
+                tail1 = head1;
+            size1--;
+        }
+        else {
+            chek(head1);
+            chek(head2);
+        }
+        if (size1 < size2) {
+            terrorize(head1, tail1, head2, tail2);
+            size1++;
+            size2--;
+        }
+    }
+
+    freeList(head1);
+    freeList(head2);
+
+    return 0;
+}
+
+void terrorize(List& head1, List& tail1, List& head2, List& tail2) {
+    List temp = head2;
+    head2 = head2->next;
+    if (head2 != nullptr) {
+        head2->prev = nullptr;
+    }
+    else {
+        tail2 = nullptr;
+    }
+    temp->next = nullptr;
+    temp->prev = tail1;
+    if (tail1 != nullptr) {
+        tail1->next = temp;
+    }
+    else {
+        head1 = temp;
+    }
+    tail1 = temp;
+}
+
+void goblin(List& head, List& tail) {
+    int k = 0;
+    std::cin >> k;
+    List p = new Item;
+    p->data = k;
+    p->next = nullptr;
+    if (head == nullptr) {
+        head = p;
+        tail = head;
+    }
+    else {
+        p->prev = tail;
+        tail->next = p;
+        tail = p;
+    }
+}
+
+void Goblin(List& head, List& tail) {
+    int k = 0;
+    std::cin >> k;
+    List p = new Item;
+    p->data = k;
+    p->next = nullptr;
+    if (head == nullptr) {
+        head = p;
+        tail = head;
+    }
+    else {
+        p->next = head;
+        head->prev = p;
+        head = p;
+    }
+}
+
+void shaman(List& head) {
+    std::cout << head->data << std::endl;
+    List temp = head;
+    head = head->next;
+    delete temp;
+}
+
+void chek(List& head) {
+    List cur = head;
+    while (cur != nullptr) {
+        std::cout << cur->data;
+        cur = cur->next;
+    }
+}
+
+void freeList(List& head) {
+    while (head != nullptr) {
+        List temp = head;
+        head = head->next;
+        delete temp;
+    }
+}

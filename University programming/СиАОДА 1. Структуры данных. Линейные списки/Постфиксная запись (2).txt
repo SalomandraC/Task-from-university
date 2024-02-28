@@ -1,0 +1,101 @@
+//https://informatics.msk.ru/mod/statements/view.php?id=206&chapterid=52#1
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <cstdio>
+
+/* Структура, описывающая элемент линейного списка
+char data - значение
+Item* next - указатель на следующий элемент
+*/
+struct Item {
+    Item* next = nullptr;
+    Item* prev = nullptr;
+    int data;
+};
+
+typedef Item* List;
+
+// Функция перевода чисел, записанных в массиве формата char в int
+// int& - ссылка на переменную, в которой будет записан результат
+// boo - массив чаров, элементы которого переводятся в инт
+// возвращает: ничего
+void translate(int& c, char* boo);
+
+// Функция добавления нового элемента в конец списка
+// List& tail - ссылка на конец списка, в который добавляем элемент
+// int c - значение, которое мы запишем в создаваемый  элемент
+// возвращает: ничего
+void pushBack(List& tail, int c);
+
+// Функция удаления элемента из конца списка
+// List& tail - ссылка на удаляемый элемент
+// возвращает: ничего
+void my_delete(List& tail);
+
+int main() {
+    char boo[100001] = "";
+    List tail = nullptr;
+    while (boo[0] != '\n' && (scanf("%s", &boo) == 1)) {
+        if (boo[0] != '+' && boo[0] != '-' && boo[0] != '*') {
+            int c = 0;
+            translate(c, boo);
+            pushBack(tail, c);
+        }
+        else if (boo[0] == '+') {
+            int c = 0;
+            c = tail->prev->data + tail->data;
+            my_delete(tail);
+            my_delete(tail);
+            pushBack(tail, c);
+        }
+        else if (boo[0] == '-') {
+            int c = 0;
+            c = tail->prev->data - tail->data;
+            my_delete(tail);
+            my_delete(tail);
+            pushBack(tail, c);
+        }
+        else {
+            int c = 0;
+            c = tail->prev->data * tail->data;
+            my_delete(tail);
+            my_delete(tail);
+            pushBack(tail, c);
+        }
+    }
+    std::cout << tail->data;
+    return 0;
+}
+
+void translate(int& c, char* boo) {
+    char* ptr = boo;
+    while (*ptr != '\0' && *ptr != '\n') {
+        c = c * 10 + (*ptr - '0');
+        ptr++;
+    }
+}
+
+void pushBack(List& tail, int c) {
+    List p = new Item;
+    p->data = c;
+    if (tail == nullptr) {
+        tail = p;
+    }
+    else {
+        tail->next = p;
+        p->prev = tail;
+        tail = p;
+    }
+}
+
+void my_delete(List& tail) {
+    if (tail != nullptr) {
+        List temp = tail;
+        tail = tail->prev;
+        if (tail != nullptr) {
+            tail->next = nullptr;
+        }
+        delete temp;
+    }
+}
