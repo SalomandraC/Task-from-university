@@ -1,0 +1,32 @@
+#include <iostream>
+#include <deque>
+
+int main() {
+    int n = 0;
+    std::deque<int> deque1, deque2;
+    std::cin >> n;
+    for (int i = 0; i < n; ++i) {
+        char boo;
+        int value = 0;
+        std::cin >> boo;
+        if (boo == '+') {
+            std::cin >> value;
+            deque2.push_back(value);
+        }
+        else if (boo == '*') {
+            std::cin >> value;
+            deque2.push_front(value);
+        }
+        else if (boo == '-') {
+            if (!deque1.empty()) {
+                std::cout << deque1.front() << std::endl;
+                deque1.pop_front();
+            }
+        }
+        while (deque1.size() < deque2.size()) {
+            deque1.push_back(deque2.front());
+            deque2.pop_front();
+        }
+    }
+    return 0;
+}

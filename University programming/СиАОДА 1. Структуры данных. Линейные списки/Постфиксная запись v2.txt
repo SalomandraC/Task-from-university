@@ -1,0 +1,53 @@
+//https://informatics.msk.ru/mod/statements/view.php?id=206&chapterid=52#1
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <cstdio>
+#include <stack>
+
+using namespace std;
+
+void translate(int& c, char* boo) {
+    char* ptr = boo;
+    while (*ptr != '\0' && *ptr != '\n') {
+        c = c * 10 + (*ptr - '0');
+        ptr++;
+    }
+}
+
+int main() {
+    char boo[100001] = "";
+    stack<int> stek;
+    while (boo[0] != '\n' && (scanf("%s", &boo) == 1)) {
+        if (boo[0] != '+' && boo[0] != '-' && boo[0] != '*') {
+            int c = 0;
+            translate(c, boo);
+            stek.push(c);
+        }
+        else if (boo[0] == '+') {
+            int c = 0;
+            c = stek.top();
+            stek.pop();
+            c += stek.top();
+            stek.pop();
+            stek.push(c);
+        }
+        else if (boo[0] == '-') {
+            int c = (-1) * stek.top();
+            stek.pop();
+            c += stek.top();
+            stek.pop();
+            stek.push(c);
+        }
+        else {
+            int c = 0;
+            c = stek.top();
+            stek.pop();
+            c *= stek.top();
+            stek.pop();
+            stek.push(c);
+        }
+    }
+    std::cout << stek.top() << endl;
+    return 0;
+}

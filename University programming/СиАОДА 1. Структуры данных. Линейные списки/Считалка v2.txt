@@ -1,0 +1,26 @@
+
+#include <iostream>
+#include <deque>
+
+int main() {
+    int n = 0, dead = 0, cur = 1;
+    std::deque <int> circl;
+    std::cin >> n;
+    for (int i = 1; i <= n; i++) {
+        circl.push_back(i);
+    }
+    std::cin >> dead;
+    while (circl.size() != 0) {
+        if (cur != dead) {
+            circl.push_back(circl.front());
+            circl.pop_front();
+            cur++;
+        }
+        else {
+            std::cout << circl.front() << ' ';
+            circl.pop_front();
+            cur = 1;
+        }
+    }
+    return 0;
+}
